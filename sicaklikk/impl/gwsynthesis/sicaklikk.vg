@@ -1,0 +1,509 @@
+//
+//Written by GowinSynthesis
+//Product Version "V1.9.8.11"
+//Mon May 29 02:04:42 2023
+
+//Source file index table:
+//file0 "\C:/odev/sicaklikk/src/nemm.v"
+`timescale 100 ps/100 ps
+module TemperatureSensor (
+  clk,
+  reset,
+  dht_data,
+  led_red,
+  led_blue
+)
+;
+input clk;
+input reset;
+input dht_data;
+output led_red;
+output led_blue;
+wire clk_d;
+wire reset_d;
+wire dht_data_d;
+wire n206_4;
+wire n85_5;
+wire n206_5;
+wire n206_6;
+wire n85_6;
+wire n85_7;
+wire n83_38;
+wire n14_11;
+wire led_blue_d;
+wire dht_valid_data;
+wire led_red_d;
+wire n13_1;
+wire n13_2;
+wire n12_1;
+wire n12_2;
+wire n11_1;
+wire n11_2;
+wire n10_1;
+wire n10_2;
+wire n9_1;
+wire n9_2;
+wire n8_1;
+wire n8_2;
+wire n7_1;
+wire n7_0_COUT;
+wire dht_shift_reg_23_9;
+wire [7:0] temperature;
+wire [23:0] dht_shift_reg;
+wire [7:0] dht_bit_counter;
+wire VCC;
+wire GND;
+  IBUF clk_ibuf (
+    .O(clk_d),
+    .I(clk) 
+);
+  IBUF reset_ibuf (
+    .O(reset_d),
+    .I(reset) 
+);
+  IBUF dht_data_ibuf (
+    .O(dht_data_d),
+    .I(dht_data) 
+);
+  OBUF led_red_obuf (
+    .O(led_red),
+    .I(led_red_d) 
+);
+  OBUF led_blue_obuf (
+    .O(led_blue),
+    .I(led_blue_d) 
+);
+  LUT4 n206_s0 (
+    .F(n206_4),
+    .I0(dht_valid_data),
+    .I1(dht_bit_counter[0]),
+    .I2(n206_5),
+    .I3(n206_6) 
+);
+defparam n206_s0.INIT=16'h1000;
+  LUT3 n85_s1 (
+    .F(n85_5),
+    .I0(temperature[1]),
+    .I1(n85_6),
+    .I2(n85_7) 
+);
+defparam n85_s1.INIT=8'h70;
+  LUT3 n206_s1 (
+    .F(n206_5),
+    .I0(dht_bit_counter[5]),
+    .I1(dht_bit_counter[7]),
+    .I2(dht_bit_counter[6]) 
+);
+defparam n206_s1.INIT=8'h10;
+  LUT4 n206_s2 (
+    .F(n206_6),
+    .I0(dht_bit_counter[1]),
+    .I1(dht_bit_counter[2]),
+    .I2(dht_bit_counter[3]),
+    .I3(dht_bit_counter[4]) 
+);
+defparam n206_s2.INIT=16'h0001;
+  LUT4 n85_s2 (
+    .F(n85_6),
+    .I0(temperature[0]),
+    .I1(temperature[2]),
+    .I2(temperature[3]),
+    .I3(temperature[4]) 
+);
+defparam n85_s2.INIT=16'h8000;
+  LUT3 n85_s3 (
+    .F(n85_7),
+    .I0(temperature[5]),
+    .I1(temperature[6]),
+    .I2(temperature[7]) 
+);
+defparam n85_s3.INIT=8'h01;
+  LUT3 n83_s25 (
+    .F(n83_38),
+    .I0(temperature[1]),
+    .I1(n85_6),
+    .I2(n85_7) 
+);
+defparam n83_s25.INIT=8'h8F;
+  LUT2 n14_s3 (
+    .F(n14_11),
+    .I0(dht_bit_counter[0]),
+    .I1(dht_valid_data) 
+);
+defparam n14_s3.INIT=4'h9;
+  DFFC led_blue_reg_s0 (
+    .Q(led_blue_d),
+    .D(n85_5),
+    .CLK(clk_d),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_7_s0 (
+    .Q(temperature[7]),
+    .D(dht_shift_reg[23]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_6_s0 (
+    .Q(temperature[6]),
+    .D(dht_shift_reg[22]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_5_s0 (
+    .Q(temperature[5]),
+    .D(dht_shift_reg[21]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_4_s0 (
+    .Q(temperature[4]),
+    .D(dht_shift_reg[20]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_3_s0 (
+    .Q(temperature[3]),
+    .D(dht_shift_reg[19]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_2_s0 (
+    .Q(temperature[2]),
+    .D(dht_shift_reg[18]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_1_s0 (
+    .Q(temperature[1]),
+    .D(dht_shift_reg[17]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE temperature_0_s0 (
+    .Q(temperature[0]),
+    .D(dht_shift_reg[16]),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_23_s0 (
+    .Q(dht_shift_reg[23]),
+    .D(dht_shift_reg[22]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_22_s0 (
+    .Q(dht_shift_reg[22]),
+    .D(dht_shift_reg[21]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_21_s0 (
+    .Q(dht_shift_reg[21]),
+    .D(dht_shift_reg[20]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_20_s0 (
+    .Q(dht_shift_reg[20]),
+    .D(dht_shift_reg[19]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_19_s0 (
+    .Q(dht_shift_reg[19]),
+    .D(dht_shift_reg[18]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_18_s0 (
+    .Q(dht_shift_reg[18]),
+    .D(dht_shift_reg[17]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_17_s0 (
+    .Q(dht_shift_reg[17]),
+    .D(dht_shift_reg[16]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_16_s0 (
+    .Q(dht_shift_reg[16]),
+    .D(dht_shift_reg[15]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_15_s0 (
+    .Q(dht_shift_reg[15]),
+    .D(dht_shift_reg[14]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_14_s0 (
+    .Q(dht_shift_reg[14]),
+    .D(dht_shift_reg[13]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_13_s0 (
+    .Q(dht_shift_reg[13]),
+    .D(dht_shift_reg[12]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_12_s0 (
+    .Q(dht_shift_reg[12]),
+    .D(dht_shift_reg[11]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_11_s0 (
+    .Q(dht_shift_reg[11]),
+    .D(dht_shift_reg[10]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_10_s0 (
+    .Q(dht_shift_reg[10]),
+    .D(dht_shift_reg[9]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_9_s0 (
+    .Q(dht_shift_reg[9]),
+    .D(dht_shift_reg[8]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_8_s0 (
+    .Q(dht_shift_reg[8]),
+    .D(dht_shift_reg[7]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_7_s0 (
+    .Q(dht_shift_reg[7]),
+    .D(dht_shift_reg[6]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_6_s0 (
+    .Q(dht_shift_reg[6]),
+    .D(dht_shift_reg[5]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_5_s0 (
+    .Q(dht_shift_reg[5]),
+    .D(dht_shift_reg[4]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_4_s0 (
+    .Q(dht_shift_reg[4]),
+    .D(dht_shift_reg[3]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_3_s0 (
+    .Q(dht_shift_reg[3]),
+    .D(dht_shift_reg[2]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_2_s0 (
+    .Q(dht_shift_reg[2]),
+    .D(dht_shift_reg[1]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_1_s0 (
+    .Q(dht_shift_reg[1]),
+    .D(dht_shift_reg[0]),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_shift_reg_0_s0 (
+    .Q(dht_shift_reg[0]),
+    .D(dht_data_d),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_7_s0 (
+    .Q(dht_bit_counter[7]),
+    .D(n7_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_6_s0 (
+    .Q(dht_bit_counter[6]),
+    .D(n8_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_5_s0 (
+    .Q(dht_bit_counter[5]),
+    .D(n9_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_4_s0 (
+    .Q(dht_bit_counter[4]),
+    .D(n10_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_3_s0 (
+    .Q(dht_bit_counter[3]),
+    .D(n11_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_2_s0 (
+    .Q(dht_bit_counter[2]),
+    .D(n12_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_bit_counter_1_s0 (
+    .Q(dht_bit_counter[1]),
+    .D(n13_1),
+    .CLK(clk_d),
+    .CE(dht_shift_reg_23_9),
+    .CLEAR(reset_d) 
+);
+  DFFCE dht_valid_data_s0 (
+    .Q(dht_valid_data),
+    .D(VCC),
+    .CLK(clk_d),
+    .CE(n206_4),
+    .CLEAR(reset_d) 
+);
+  DFFC led_red_reg_s0 (
+    .Q(led_red_d),
+    .D(n83_38),
+    .CLK(clk_d),
+    .CLEAR(reset_d) 
+);
+  DFFC dht_bit_counter_0_s2 (
+    .Q(dht_bit_counter[0]),
+    .D(n14_11),
+    .CLK(clk_d),
+    .CLEAR(reset_d) 
+);
+defparam dht_bit_counter_0_s2.INIT=1'b0;
+  ALU n13_s (
+    .SUM(n13_1),
+    .COUT(n13_2),
+    .I0(dht_bit_counter[1]),
+    .I1(dht_bit_counter[0]),
+    .I3(GND),
+    .CIN(GND) 
+);
+defparam n13_s.ALU_MODE=0;
+  ALU n12_s (
+    .SUM(n12_1),
+    .COUT(n12_2),
+    .I0(dht_bit_counter[2]),
+    .I1(GND),
+    .I3(GND),
+    .CIN(n13_2) 
+);
+defparam n12_s.ALU_MODE=0;
+  ALU n11_s (
+    .SUM(n11_1),
+    .COUT(n11_2),
+    .I0(dht_bit_counter[3]),
+    .I1(GND),
+    .I3(GND),
+    .CIN(n12_2) 
+);
+defparam n11_s.ALU_MODE=0;
+  ALU n10_s (
+    .SUM(n10_1),
+    .COUT(n10_2),
+    .I0(dht_bit_counter[4]),
+    .I1(GND),
+    .I3(GND),
+    .CIN(n11_2) 
+);
+defparam n10_s.ALU_MODE=0;
+  ALU n9_s (
+    .SUM(n9_1),
+    .COUT(n9_2),
+    .I0(dht_bit_counter[5]),
+    .I1(GND),
+    .I3(GND),
+    .CIN(n10_2) 
+);
+defparam n9_s.ALU_MODE=0;
+  ALU n8_s (
+    .SUM(n8_1),
+    .COUT(n8_2),
+    .I0(dht_bit_counter[6]),
+    .I1(GND),
+    .I3(GND),
+    .CIN(n9_2) 
+);
+defparam n8_s.ALU_MODE=0;
+  ALU n7_s (
+    .SUM(n7_1),
+    .COUT(n7_0_COUT),
+    .I0(dht_bit_counter[7]),
+    .I1(GND),
+    .I3(GND),
+    .CIN(n8_2) 
+);
+defparam n7_s.ALU_MODE=0;
+  INV dht_shift_reg_23_s4 (
+    .O(dht_shift_reg_23_9),
+    .I(dht_valid_data) 
+);
+  VCC VCC_cZ (
+    .V(VCC)
+);
+  GND GND_cZ (
+    .G(GND)
+);
+  GSR GSR (
+    .GSRI(VCC) 
+);
+endmodule /* TemperatureSensor */
