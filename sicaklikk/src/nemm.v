@@ -33,7 +33,7 @@ module TemperatureSensor(
 
         if (dht_bit_counter == 8'h40) begin
           dht_valid_data <= 1'b1;
-          temperature <= dht_shift_reg[23:16]; // Sıcaklık verisi DHT11'de 24-31 bitler arasında yer alır
+          temperature <= dht_shift_reg[23:16]; // Sıcaklık verisi DHT11'de 24-31 bitler arasında yer aldığı için bu aralığı seçiyoruz.
         end
       end
 
